@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Meal extends Model
 {
-    protected $primaryKey = 'meal_id';
+    protected $primaryKey = 'id';
     protected $fillable = ['name', 'description', 'price', 'category_id', 'is_available'];
 
     public function category()
