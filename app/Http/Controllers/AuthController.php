@@ -35,7 +35,7 @@ class AuthController extends Controller
         ]);
 
         if ($user) {
-            return response()->json(['user' => $user], 201);
+            return response()->json($user, 201);
         } else {
             return response()->json(['message' => 'User registration failed.'], 500);
         }

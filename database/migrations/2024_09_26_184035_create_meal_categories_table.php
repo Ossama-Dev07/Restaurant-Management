@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
        Schema::create('meal_categorys', function (Blueprint $table) {
-        $table->id(); // This creates an auto-incrementing, unsigned big integer (primary key).
+        $table->id(); 
         $table->string('name', 100);
         $table->text('description')->nullable();
         $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meal_categories');
+        Schema::dropIfExists('meal_categorys');
     }
 };

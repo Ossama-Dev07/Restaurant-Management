@@ -14,5 +14,9 @@ class Meal extends Model
     {
         return $this->belongsTo(MealCategory::class, 'category_id');
     }
+    public function getCategoryNameAttribute()
+    {
+        return $this->category ? $this->category->name : 'No Category';
+    }
 }
 

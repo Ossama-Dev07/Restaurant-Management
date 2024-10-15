@@ -17,8 +17,8 @@ class MealsController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $meals=Meal::all();
-        return response()->json(['meals' => $meals], 201);
+        $meals = Meal::with('category')->get();
+        return response()->json($meals, 201);
     }
 
     public function store(Request $request)
@@ -38,13 +38,13 @@ class MealsController extends Controller
             'category_id' => $request->category_id,
             'is_available' => $request->is_available,
         ]);
-        return response()->json(['meal' => $meal], 201); 
+        return response()->json( $meal, 201); 
     }
 
     public function show($id)
     {
-        $meal=Meal::findOrFail($id);
-        return response()->json(['meals' => $meal], 201);
+        $meal = Meal::with('category')->findOrFail($id);
+        return response()->json($meal, 201);
     }
 
     /**
@@ -56,15 +56,27 @@ class MealsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $meal = Meal::find($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'price' => 'required|numeric|max:255',
+            'category_id'=>'required|integer|exists:meal_categorys,id',
+            'is_available' => 'required|boolean',
+            
+        ]);
+        if ($meal) {
+            $meal->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+                'is_available' => $request->is_available,
+            ]);
+            return response()->json($meal, 201);
+        }
+        return response()->json(["meal not found"], 501);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Meal::destroy($id);
