@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\MealsController;
 use App\Http\Controllers\API\MealCategorysController;
+use App\Http\Controllers\API\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 /*
@@ -19,6 +20,7 @@ use App\Http\Controllers\AuthController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/meals', MealsController::class)->except(['index','show']);
+    Route::apiResource('/employees', EmployeeController::class);
     Route::apiResource('/mealcategorys', MealCategorysController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
